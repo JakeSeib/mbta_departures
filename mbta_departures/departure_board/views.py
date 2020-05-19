@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 import jsonapi_requests
 from .utils.filters import is_commuter_rail
+from .utils.fields import add_display_times
 # import the logging library
 import logging
 
@@ -19,12 +20,12 @@ def index(request):
 
     schedule_endpoint = api.endpoint('/schedules')
     schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'prediction', 'sort': 'departure_time'})
-    prediction_endpoint = api.endpoint('/predictions')
-    prediction_response = prediction_endpoint.get(params={'filter[stop]': 'place-north', 'filter[route_type]': '2'})
+    included_predictions = filter(is_commuter_rail, schedule_response.content.included)
+    schedule_data = add_display_times(filter(is_commuter_rail, schedule_response.data), included_predictions)
 
     context = {
-    'schedule_data': filter(is_commuter_rail, schedule_response.data),
-    'included_predictions': filter(is_commuter_rail, schedule_response.content.included),
+    'schedule_data': schedule_data,
+    'included_predictions': included_predictions,
     }
 
     return render(request, 'departure_board/index.html', context)
