@@ -1,8 +1,6 @@
-from django.http import Http404
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
 import jsonapi_requests
 # import the logging library
 import logging
@@ -18,10 +16,13 @@ def index(request):
         # 'api_key': 'todo: insert an api_key here',
     })
 
+    schedule_endpoint = api.endpoint('/schedules')
+    schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'prediction'})
     prediction_endpoint = api.endpoint('/predictions')
     prediction_response = prediction_endpoint.get(params={'filter[stop]': 'place-north'})
 
     context = {
+    'schedule_full_response': schedule_response,
     'prediction_data': prediction_response.data,
     }
 

@@ -12,5 +12,10 @@
     {% else %}
       <p>No prediction response available.</p>
     {% endif %}
+    {% if schedule_full_response %}
+      <p>{{ schedule_full_response }}</p>
+    {% else %}
+        <p>No schedule response available.</p>
+    {% endif %}
   </body>
 </html>
