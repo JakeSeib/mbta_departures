@@ -24,7 +24,7 @@ def index(request):
     schedule_data = add_display_times(filter(is_commuter_rail, schedule_response.data), included_predictions)
 
     context = {
-    'schedule_data': schedule_data,
+    'schedule_data': schedule_data[0:10],
     'included_predictions': included_predictions,
     }
 
