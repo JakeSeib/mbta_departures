@@ -1,0 +1,26 @@
+<!-- Refer to this template within Django as polls/index.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    {% if schedule_data %}
+      {% for schedule_el in schedule_data %}
+        <p>{{ schedule_el }}</p>
+      {% endfor %}
+    {% else %}
+        <p>No schedule data available.</p>
+    {% endif %}
+    {% if included_predictions %}
+      <!-- <p>{{ schedule_included }}</p> -->
+      {% for included_el in included_predictions %}
+        <p>{{ included_el }}</p>
+      {% endfor %}
+    {% else %}
+        <p>No included schedule data available.</p>
+    {% endif %}
+  </body>
+</html>
