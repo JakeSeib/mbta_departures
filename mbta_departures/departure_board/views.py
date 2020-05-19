@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 import jsonapi_requests
+from .utils.filters import is_commuter_rail
 # import the logging library
 import logging
 
@@ -23,6 +24,7 @@ def index(request):
 
     context = {
     'schedule_full_response': schedule_response,
+    'schedule_data': filter(is_commuter_rail, schedule_response.data),
     'prediction_data': prediction_response.data,
     }
 

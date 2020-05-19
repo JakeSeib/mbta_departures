@@ -7,6 +7,13 @@
     <title>My test page</title>
   </head>
   <body>
+    {% if schedule_data %}
+      {% for schedule_el in schedule_data %}
+        <p>{{ schedule_el }}</p>
+      {% endfor %}
+    {% else %}
+        <p>No schedule response available.</p>
+    {% endif %}
     {% if prediction_data %}
       <p>{{ prediction_data }}</p>
     {% else %}
