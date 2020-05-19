@@ -1,0 +1,16 @@
+<!-- Refer to this template within Django as polls/index.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    {% if prediction_data %}
+      <p>{{ prediction_data }}</p>
+    {% else %}
+      <p>No prediction response available.</p>
+    {% endif %}
+  </body>
+</html>
