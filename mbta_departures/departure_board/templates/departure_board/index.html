@@ -8,14 +8,14 @@
   </head>
   <body>
     {% if schedule_data %}
-      {% for schedule_el in schedule_data %}
-        <p>{{ schedule_el }}</p>
+      {% for schedule in schedule_data %}
+        <p>{{ schedule }}</p>
       {% endfor %}
     {% else %}
         <p>No schedule data available.</p>
     {% endif %}
+    <p>Start included predictions</p>
     {% if included_predictions %}
-      <!-- <p>{{ schedule_included }}</p> -->
       {% for included_el in included_predictions %}
         <p>{{ included_el }}</p>
       {% endfor %}
