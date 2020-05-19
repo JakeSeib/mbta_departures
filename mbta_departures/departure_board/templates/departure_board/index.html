@@ -12,17 +12,15 @@
         <p>{{ schedule_el }}</p>
       {% endfor %}
     {% else %}
-        <p>No schedule response available.</p>
+        <p>No schedule data available.</p>
     {% endif %}
-    {% if prediction_data %}
-      <p>{{ prediction_data }}</p>
+    {% if included_predictions %}
+      <!-- <p>{{ schedule_included }}</p> -->
+      {% for included_el in included_predictions %}
+        <p>{{ included_el }}</p>
+      {% endfor %}
     {% else %}
-      <p>No prediction response available.</p>
-    {% endif %}
-    {% if schedule_full_response %}
-      <p>{{ schedule_full_response }}</p>
-    {% else %}
-        <p>No schedule response available.</p>
+        <p>No included schedule data available.</p>
     {% endif %}
   </body>
 </html>

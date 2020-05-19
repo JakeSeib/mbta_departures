@@ -18,14 +18,13 @@ def index(request):
     })
 
     schedule_endpoint = api.endpoint('/schedules')
-    schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'prediction'})
+    schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'prediction', 'sort': 'departure_time'})
     prediction_endpoint = api.endpoint('/predictions')
-    prediction_response = prediction_endpoint.get(params={'filter[stop]': 'place-north'})
+    prediction_response = prediction_endpoint.get(params={'filter[stop]': 'place-north', 'filter[route_type]': '2'})
 
     context = {
-    'schedule_full_response': schedule_response,
     'schedule_data': filter(is_commuter_rail, schedule_response.data),
-    'prediction_data': prediction_response.data,
+    'included_predictions': filter(is_commuter_rail, schedule_response.content.included),
     }
 
     return render(request, 'departure_board/index.html', context)
