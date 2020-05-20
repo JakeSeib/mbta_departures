@@ -23,7 +23,7 @@
         <td>{{ schedule.attributes.display_time }}</td>
         <td>{{ schedule.relationships.route.data.id|slice:"3:" }}</td>
         <td>{{ schedule.attributes.train_num }}</td>
-        <td>TBD</td>
+        <td>{{ schedule.attributes.track_num }}</td>
         <td>{{ schedule.attributes.status }}</td>
       </tr>
       {% endfor %}
@@ -35,6 +35,15 @@
       {% endfor %}
     {% else %}
         <p>No schedule data available.</p>
+    {% endif %}
+
+    <p>Start included stops</p>
+    {% if included_stops %}
+      {% for included_el in included_stops %}
+        <p>{{ included_el }}</p>
+      {% endfor %}
+    {% else %}
+        <p>No included stops available.</p>
     {% endif %}
 
     <p>Start included trips</p>

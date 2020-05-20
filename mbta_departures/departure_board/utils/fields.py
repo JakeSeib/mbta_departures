@@ -29,12 +29,19 @@ def add_prediction_fields(schedule, predictions):
     if prediction:
         iso_time = prediction.attributes['arrival_time'] or prediction.attributes['departure_time']
         status = prediction.attributes['status']
+        predicted_track = prediction.relationships['stop'].data.id
+        # if predicted_track.startswith('North Station-'):
+        track_num = prediction.relationships['stop'].data.id[14:] or 'TBD'
+        # else:
+        #     track_num = 'TBD'
     else:
         iso_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
         status = 'On time'
+        track_num = 'TBD'
     display_time = isoparse(iso_time)
     schedule.attributes['display_time'] = display_time
     schedule.attributes['status'] = status
+    schedule.attributes['track_num'] = track_num
     return schedule
 
 def add_train_num(schedule, trips):
