@@ -8,10 +8,10 @@ from .utils.filters import is_commuter_rail
 from .utils.fields import get_display_schedules
 from .utils.sorting import sort_included
 # import the logging library
-import logging
+# import logging
 
 # Get an instance of a logger
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 def index(request):
     curr_time = datetime.now().time()
