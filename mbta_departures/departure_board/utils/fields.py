@@ -1,16 +1,16 @@
 from dateutil.parser import isoparse
 from .filters import is_commuter_rail
 
-def add_display_time(schedule, predictions):
+def add_prediction_fields(schedule, predictions):
     """Given a schedule and included predictions, add a display_time property to
     the schedule, selecting the time that should be used for sorting/displaying
     to customers.
 
     Predicted time should be checked first. arrival_time should be used over
-    departure_time.
+    departure_time. No departure_time indicates that the stop should not be displayed, and the
+    schedule will be given a display_time of None.
 
-    No departure_time indicates that the stop should not be displayed, and the
-    schedule will be given a display_time of None."""
+    If a matching prediction is found, also add its status to the schedule."""
     prediction = None
     if schedule.relationships['prediction']:
         id_to_match = schedule.relationships['prediction'].data.id
@@ -28,10 +28,13 @@ def add_display_time(schedule, predictions):
     # otherwise, assign the appropriate display_time
     if prediction:
         iso_time = prediction.attributes['arrival_time'] or prediction.attributes['departure_time']
+        status = prediction.attributes['status']
     else:
         iso_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
+        status = 'On time'
     display_time = isoparse(iso_time)
     schedule.attributes['display_time'] = display_time
+    schedule.attributes['status'] = status
     return schedule
 
 def add_train_num(schedule, trips):
@@ -47,7 +50,7 @@ def check_add_schedule(schedule, included_dict, commuter_schedules):
     and a list of commuter rail schedules, add relevant fields to that
     schedule and add it to the list if it is a relevant schedule to display
     (i.e. north station is not its last stop)"""
-    add_display_time(schedule, included_dict['predictions'])
+    add_prediction_fields(schedule, included_dict['predictions'])
     if schedule.attributes['display_time']:
         add_train_num(schedule, included_dict['trips'])
         commuter_schedules.append(schedule)

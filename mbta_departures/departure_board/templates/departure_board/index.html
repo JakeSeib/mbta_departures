@@ -24,7 +24,7 @@
         <td>{{ schedule.relationships.route.data.id|slice:"3:" }}</td>
         <td>{{ schedule.attributes.train_num }}</td>
         <td>TBD</td>
-        <td>TBD</td>
+        <td>{{ schedule.attributes.status }}</td>
       </tr>
       {% endfor %}
     </table>
