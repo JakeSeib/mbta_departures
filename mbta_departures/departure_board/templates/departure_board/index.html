@@ -8,6 +8,8 @@
   </head>
   <body>
 
+    <p>{{ my_var }}</p>
+
     <table class='n-station-table'>
       <tr>
         <th>Carrier</th>
@@ -21,13 +23,23 @@
       <tr>
         <td>MBTA</td>
         <td>{{ schedule.attributes.display_time }}</td>
-        <td>{{ schedule.relationships.route.data.id|slice:"3:" }}</td>
+        <td>{{ schedule.attributes.headsign }}</td>
         <td>{{ schedule.attributes.train_num }}</td>
         <td>{{ schedule.attributes.track_num }}</td>
         <td>{{ schedule.attributes.status }}</td>
       </tr>
       {% endfor %}
     </table>
+
+    {% if all_predictions %}
+      {% for pred in all_predictions %}
+        <p>{{ pred }}</p>
+      {% endfor %}
+    {% else %}
+        <p>No all_predictions available.</p>
+    {% endif %}
+
+    <p>End all_predictions</p>
 
     {% if schedule_data %}
       {% for schedule in schedule_data %}
