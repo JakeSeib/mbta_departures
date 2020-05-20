@@ -4,6 +4,7 @@ from django.shortcuts import render
 import jsonapi_requests
 from .utils.filters import is_commuter_rail
 from .utils.fields import add_display_times
+from .utils.sorting import sort_included
 # import the logging library
 import logging
 
@@ -15,17 +16,18 @@ def index(request):
         'API_ROOT': 'https://api-v3.mbta.com',
         'VALIDATE_SSL': False,
         'TIMEOUT': 1,
-        # 'api_key': 'todo: insert an api_key here',
+        # 'api_key': 'TODO: insert an api_key here',
     })
 
     schedule_endpoint = api.endpoint('/schedules')
-    schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'prediction', 'sort': 'departure_time'})
-    included_predictions = filter(is_commuter_rail, schedule_response.content.included)
-    schedule_data = add_display_times(filter(is_commuter_rail, schedule_response.data), included_predictions)
+    schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'trip,prediction', 'sort': 'departure_time'})
+    included_dict = sort_included(schedule_response.content.included)
+    schedule_data = add_display_times(filter(is_commuter_rail, schedule_response.data), included_dict['predictions'])
 
     context = {
     'schedule_data': schedule_data[0:10],
-    'included_predictions': included_predictions,
+    'included_trips': included_dict['trips'],
+    'included_predictions': included_dict['predictions'],
     }
 
     return render(request, 'departure_board/index.html', context)

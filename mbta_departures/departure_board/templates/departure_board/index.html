@@ -1,4 +1,4 @@
-<!-- Refer to this template within Django as polls/index.html -->
+<!-- Refer to this template within Django as departure_board/index.html -->
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,7 @@
       {% for schedule in schedule_data %}
       <tr>
         <td>MBTA</td>
-        <td>{{  schedule.attributes.display_time  }}</td>
+        <td>{{ schedule.attributes.display_time }}</td>
         <td>{{ schedule.relationships.route.data.id|slice:"3:" }}</td>
         <td>TBD</td>
         <td>TBD</td>
@@ -36,13 +36,23 @@
     {% else %}
         <p>No schedule data available.</p>
     {% endif %}
+
+    <p>Start included trips</p>
+    {% if included_trips %}
+      {% for included_el in included_trips %}
+        <p>{{ included_el }}</p>
+      {% endfor %}
+    {% else %}
+        <p>No included trips available.</p>
+    {% endif %}
+
     <p>Start included predictions</p>
     {% if included_predictions %}
       {% for included_el in included_predictions %}
         <p>{{ included_el }}</p>
       {% endfor %}
     {% else %}
-        <p>No included schedule data available.</p>
+        <p>No included predictions available.</p>
     {% endif %}
   </body>
 </html>
