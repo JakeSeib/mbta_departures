@@ -7,6 +7,28 @@
     <title>My test page</title>
   </head>
   <body>
+
+    <table class='n-station-table'>
+      <tr>
+        <th>Carrier</th>
+        <th>Time</th>
+        <th>Destination</th>
+        <th>Train #</th>
+        <th>Track #</th>
+        <th>Status</th>
+      </tr>
+      {% for schedule in schedule_data %}
+      <tr>
+        <td>MBTA</td>
+        <td>{{  schedule.attributes.display_time  }}</td>
+        <td>{{ schedule.relationships.route.data.id|slice:"3:" }}</td>
+        <td>TBD</td>
+        <td>TBD</td>
+        <td>TBD</td>
+      </tr>
+      {% endfor %}
+    </table>
+
     {% if schedule_data %}
       {% for schedule in schedule_data %}
         <p>{{ schedule }}</p>
