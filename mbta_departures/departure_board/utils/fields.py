@@ -1,3 +1,5 @@
+from dateutil.parser import isoparse
+
 def add_display_time(schedule, predictions):
     prediction = None
     if schedule.relationships['prediction']:
@@ -15,9 +17,10 @@ def add_display_time(schedule, predictions):
             return schedule
     # otherwise, assign the appropriate display_time
     if prediction:
-        display_time = prediction.attributes['arrival_time'] or prediction.attributes['departure_time']
+        iso_time = prediction.attributes['arrival_time'] or prediction.attributes['departure_time']
     else:
-        display_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
+        iso_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
+    display_time = isoparse(iso_time)
     schedule.attributes['display_time'] = display_time
     return schedule
 
