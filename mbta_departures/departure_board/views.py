@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 import jsonapi_requests
+from datetime import datetime
 
 from .utils.filters import is_commuter_rail
 from .utils.fields import get_display_schedules
@@ -13,6 +14,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 def index(request):
+    curr_time = datetime.now().time()
+
     api = jsonapi_requests.Api.config({
         'API_ROOT': 'https://api-v3.mbta.com',
         'VALIDATE_SSL': False,
@@ -21,7 +24,12 @@ def index(request):
     })
 
     schedule_endpoint = api.endpoint('/schedules')
-    schedule_response = schedule_endpoint.get(params={'filter[stop]': 'place-north', 'include': 'trip,prediction', 'sort': 'departure_time'})
+    schedule_response = schedule_endpoint.get(params={
+        'filter[stop]': 'place-north',
+        'include': 'trip,prediction',
+        'sort': 'departure_time',
+        'filter[min_time]': f'{curr_time.hour}:{curr_time.minute}',
+        })
     included_dict = sort_included(schedule_response.content.included)
     schedule_data = get_display_schedules(schedule_response.data, included_dict)
 
