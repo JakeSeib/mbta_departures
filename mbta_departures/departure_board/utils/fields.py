@@ -1,4 +1,16 @@
-def add_display_time(schedule, predictions):
+from dateutil.parser import isoparse
+from .filters import is_commuter_rail
+
+def add_prediction_fields(schedule, predictions):
+    """Given a schedule and included predictions, add a display_time property to
+    the schedule, selecting the time that should be used for sorting/displaying
+    to customers.
+
+    Predicted time should be checked first. arrival_time should be used over
+    departure_time. No departure_time indicates that the stop should not be displayed, and the
+    schedule will be given a display_time of None.
+
+    If a matching prediction is found, also add its status to the schedule."""
     prediction = None
     if schedule.relationships['prediction']:
         id_to_match = schedule.relationships['prediction'].data.id
@@ -15,22 +27,48 @@ def add_display_time(schedule, predictions):
             return schedule
     # otherwise, assign the appropriate display_time
     if prediction:
-        display_time = prediction.attributes['arrival_time'] or prediction.attributes['departure_time']
+        iso_time = prediction.attributes['arrival_time'] or prediction.attributes['departure_time']
+        status = prediction.attributes['status']
+        predicted_track = prediction.relationships['stop'].data.id
+        # if predicted_track.startswith('North Station-'):
+        track_num = prediction.relationships['stop'].data.id[14:] or 'TBD'
+        # else:
+        #     track_num = 'TBD'
     else:
-        display_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
+        iso_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
+        status = 'On time'
+        track_num = 'TBD'
+    display_time = isoparse(iso_time)
     schedule.attributes['display_time'] = display_time
+    schedule.attributes['status'] = status
+    schedule.attributes['track_num'] = track_num
     return schedule
 
-def add_display_times(schedule_data, predictions):
-    """Given schedule data and, if they exist, their associated predictions,
-    add a display_time property to each schedule object, selecting the time that
-    should be used for sorting/displaying to customers.
+def add_train_num(schedule, trips):
+    """Given a schedule and included trips, add the train number to the scheudle
+    from its associated trip."""
+    for trip in trips:
+        if trip.id == schedule.relationships['trip'].data.id:
+            schedule.attributes['train_num'] = trip.attributes['name']
+    return schedule
 
-    Predicted time should be checked first. arrival_time should be used over
-    departure_time.
+def check_add_schedule(schedule, included_dict, commuter_schedules):
+    """Given a schedule, a dict with included data for trips and predictions,
+    and a list of commuter rail schedules, add relevant fields to that
+    schedule and add it to the list if it is a relevant schedule to display
+    (i.e. north station is not its last stop)"""
+    add_prediction_fields(schedule, included_dict['predictions'])
+    if schedule.attributes['display_time']:
+        add_train_num(schedule, included_dict['trips'])
+        commuter_schedules.append(schedule)
 
-    No departure_time indicates that the stop should not be displayed, and the
-    schedule will be given a display_time of None and ignored."""
-    display_times_schedules = map(lambda x: (add_display_time(x, predictions)), schedule_data)
-    filtered_schedules = filter(lambda x: x.attributes['display_time'], display_times_schedules)
-    return sorted(list(filtered_schedules), key = lambda x: x.attributes['display_time'])
+def get_display_schedules(schedule_data, included_dict):
+    """Given schedule data and a dict with included data for trips and
+    predictions, filter out irrelevant schedules (non-commuter rail, no further
+    stops beyond N station) and return schedules with necessary information to
+    display on the departure board."""
+    commuter_schedules = []
+    for schedule in schedule_data:
+        if is_commuter_rail(schedule):
+            check_add_schedule(schedule, included_dict, commuter_schedules)
+    return sorted(commuter_schedules, key = lambda x: x.attributes['display_time'])
