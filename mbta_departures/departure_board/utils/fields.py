@@ -37,7 +37,9 @@ def add_display_time(schedule, predictions):
 def add_train_num(schedule, trips):
     """Given a schedule and included trips, add the train number to the scheudle
     from its associated trip."""
-    # TODO: implement adding train number to schedule
+    for trip in trips:
+        if trip.id == schedule.relationships['trip'].data.id:
+            schedule.attributes['train_num'] = trip.attributes['name']
     return schedule
 
 def check_add_schedule(schedule, included_dict, commuter_schedules):
