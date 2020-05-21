@@ -6,9 +6,7 @@ export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
 # INSTALL DEPENDENCIES
-sudo yum install python3-devel
-sudo yum install python-devel
-yum install -y zlib-devel epel-release python python-devel mysql-devel httpd-devel
+yum install -y zlib-devel epel-release python3 python3-devel mysql-devel httpd-devel
 yum -y groupinstall development
 yum update -y
 
