@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # OWN basic_app directory
-command sudo chown -R ec2-user:ec2-user /var/www/basic_app
+command sudo chown -R $USER:$USER /var/www/basic_app
 command python3 --version
 
 # CREATE PYTHON3 ENVIROMENT
