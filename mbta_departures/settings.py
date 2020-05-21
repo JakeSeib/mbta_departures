@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mbta_departures.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
