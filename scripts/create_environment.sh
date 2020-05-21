@@ -14,8 +14,8 @@ fi
 
 # ACTIVATE ENVIROMENT AND INSTALL REQUIREMENTS
 command source /var/www/basic_app/venv/bin/activate
-command pip3 install -r /var/www/basic_app/requirements.txt
-command pip3 list
+command pip install -r /var/www/basic_app/requirements.txt
+command pip list
 cd /var/www/basic_app
-command python3 mbta_departures/manage.py makemigrations
-command python3 mbta_departures/manage.py migrate
+command python mbta_departures/manage.py makemigrations
+command python mbta_departures/manage.py migrate
