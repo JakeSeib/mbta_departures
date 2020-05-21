@@ -14,12 +14,12 @@ yum update -y
 cp /var/www/basic_app/basic_app.conf /etc/httpd/conf.d/basic_app.conf
 
 # BUILD MOD_WSGI AND INSTALL
-wget "https://github.com/GrahamDumpleton/mod_wsgi/archive/4.5.14.tar.gz"
-tar -xzf '4.5.14.tar.gz'
-cd ./mod_wsgi-4.5.14
+wget "https://github.com/GrahamDumpleton/mod_wsgi/archive/4.7.1.tar.gz"
+tar -xzf '4.7.1.tar.gz'
+cd ./mod_wsgi-4.7.1
 ./configure --with-python=/usr/bin/python3.8
 make
 make install
 cd ..
-rm -rf mod_wsgi-4.5.14
-rm 4.5.14.tar.gz
+rm -rf mod_wsgi-4.7.1
+rm 4.7.1.tar.gz
