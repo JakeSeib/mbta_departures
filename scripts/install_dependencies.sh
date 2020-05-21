@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#set environment variables
-source ~/.bash_profile
-
 # EXPORT LANGUAGES
 source /etc/profile.d/lang.sh
 export LANG='en_US.UTF-8'

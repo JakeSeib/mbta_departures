@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import os
+import configparser
 
 # Create your views here.
 import jsonapi_requests
@@ -13,6 +13,9 @@ from .utils.sorting import sort_included
 
 # Get an instance of a logger
 # logger = logging.getLogger(__name__)
+
+config = configparser.RawConfigParser()
+config.read('.config.ini')
 
 def index(request):
     curr_time = datetime.now().time()
@@ -32,7 +35,7 @@ def index(request):
         'API_ROOT': 'https://api-v3.mbta.com',
         'VALIDATE_SSL': False,
         'TIMEOUT': 1,
-        'api_key': os.environ.get('MY_APP_API_KEY'),
+        'api_key': config['DEFAULT']['MY_APP_API_KEY'],
     })
 
     schedule_endpoint = api.endpoint('/schedules')
