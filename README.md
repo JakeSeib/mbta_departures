@@ -23,7 +23,7 @@ After installing dependencies and downloading the app, navigate to the mbta_depa
 
 `python manage.py runserver`
 
-Depending on your python installation, you may need to run `python3 manage.py runserver` instead.
+Depending on your python installation, you may need to run `python3 manage.py runserver` instead. Then, navigate to http://127.0.0.1:8000/departure_board/ in a browser to see the board of departures.
 
 ## Issues/Improvements
 - (In progress) App could be hosted and accessed directly via the web
