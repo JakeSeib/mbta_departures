@@ -15,6 +15,11 @@ from .utils.sorting import sort_included
 
 def index(request):
     curr_time = datetime.now().time()
+    curr_hour, curr_minute = curr_time.hour, curr_time.minute
+    if curr_hour < 10:
+        curr_hour = f'0{curr_hour}'
+    if curr_minute < 10:
+        curr_minute = f'0{curr_minute}'
 
     api = jsonapi_requests.Api.config({
         'API_ROOT': 'https://api-v3.mbta.com',
