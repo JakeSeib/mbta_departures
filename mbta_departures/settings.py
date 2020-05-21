@@ -23,9 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = os.environ.get('MY_APP_SECRET_KEY')
 config = configparser.RawConfigParser()
-config.read('.config.ini')
-print(config['DEFAULT'])
-print(config['DEFAULT']['MY_APP_SECRET_KEY'])
+
+config.read(BASE_DIR+'/.config.ini')
 SECRET_KEY = config['DEFAULT']['MY_APP_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!

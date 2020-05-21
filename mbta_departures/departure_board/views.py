@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import configparser
+import os
 
 # Create your views here.
 import jsonapi_requests
@@ -14,8 +15,11 @@ from .utils.sorting import sort_included
 # Get an instance of a logger
 # logger = logging.getLogger(__name__)
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 config = configparser.RawConfigParser()
-config.read('.config.ini')
+
+config.read(BASE_DIR+'/.config.ini')
 
 def index(request):
     curr_time = datetime.now().time()
