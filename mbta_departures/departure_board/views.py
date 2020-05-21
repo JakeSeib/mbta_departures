@@ -8,13 +8,18 @@ from .utils.filters import is_commuter_rail
 from .utils.fields import get_display_schedules
 from .utils.sorting import sort_included
 # import the logging library
-import logging
+# import logging
 
 # Get an instance of a logger
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 def index(request):
     curr_time = datetime.now().time()
+    curr_hour, curr_minute = curr_time.hour, curr_time.minute
+    if curr_hour < 10:
+        curr_hour = f'0{curr_hour}'
+    if curr_minute < 10:
+        curr_minute = f'0{curr_minute}'
 
     api = jsonapi_requests.Api.config({
         'API_ROOT': 'https://api-v3.mbta.com',

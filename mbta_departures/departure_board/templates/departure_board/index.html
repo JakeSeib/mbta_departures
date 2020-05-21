@@ -1,13 +1,10 @@
-<!-- Refer to this template within Django as departure_board/index.html -->
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>My test page</title>
+    <title>North Station CR Departure Board</title>
   </head>
   <body>
-
     <table class='n-station-table'>
       <tr>
         <th>Carrier</th>
@@ -21,47 +18,12 @@
       <tr>
         <td>MBTA</td>
         <td>{{ schedule.attributes.display_time }}</td>
-        <td>{{ schedule.relationships.route.data.id|slice:"3:" }}</td>
+        <td>{{ schedule.attributes.headsign }}</td>
         <td>{{ schedule.attributes.train_num }}</td>
         <td>{{ schedule.attributes.track_num }}</td>
         <td>{{ schedule.attributes.status }}</td>
       </tr>
       {% endfor %}
     </table>
-
-    {% if schedule_data %}
-      {% for schedule in schedule_data %}
-        <p>{{ schedule }}</p>
-      {% endfor %}
-    {% else %}
-        <p>No schedule data available.</p>
-    {% endif %}
-
-    <p>Start included stops</p>
-    {% if included_stops %}
-      {% for included_el in included_stops %}
-        <p>{{ included_el }}</p>
-      {% endfor %}
-    {% else %}
-        <p>No included stops available.</p>
-    {% endif %}
-
-    <p>Start included trips</p>
-    {% if included_trips %}
-      {% for included_el in included_trips %}
-        <p>{{ included_el }}</p>
-      {% endfor %}
-    {% else %}
-        <p>No included trips available.</p>
-    {% endif %}
-
-    <p>Start included predictions</p>
-    {% if included_predictions %}
-      {% for included_el in included_predictions %}
-        <p>{{ included_el }}</p>
-      {% endfor %}
-    {% else %}
-        <p>No included predictions available.</p>
-    {% endif %}
   </body>
 </html>

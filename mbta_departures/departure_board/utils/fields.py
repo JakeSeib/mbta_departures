@@ -32,8 +32,6 @@ def add_prediction_fields(schedule, predictions):
         predicted_track = prediction.relationships['stop'].data.id
         # if predicted_track.startswith('North Station-'):
         track_num = prediction.relationships['stop'].data.id[14:] or 'TBD'
-        # else:
-        #     track_num = 'TBD'
     else:
         iso_time = (schedule.attributes['arrival_time'] or schedule.attributes['departure_time'])
         status = 'On time'
@@ -44,12 +42,13 @@ def add_prediction_fields(schedule, predictions):
     schedule.attributes['track_num'] = track_num
     return schedule
 
-def add_train_num(schedule, trips):
-    """Given a schedule and included trips, add the train number to the scheudle
-    from its associated trip."""
+def add_trip_fields(schedule, trips):
+    """Given a schedule and included trips, add the train number and headsign
+    to the scheudle from its associated trip."""
     for trip in trips:
         if trip.id == schedule.relationships['trip'].data.id:
             schedule.attributes['train_num'] = trip.attributes['name']
+            schedule.attributes['headsign'] = trip.attributes['headsign']
     return schedule
 
 def check_add_schedule(schedule, included_dict, commuter_schedules):
@@ -59,7 +58,7 @@ def check_add_schedule(schedule, included_dict, commuter_schedules):
     (i.e. north station is not its last stop)"""
     add_prediction_fields(schedule, included_dict['predictions'])
     if schedule.attributes['display_time']:
-        add_train_num(schedule, included_dict['trips'])
+        add_trip_fields(schedule, included_dict['trips'])
         commuter_schedules.append(schedule)
 
 def get_display_schedules(schedule_data, included_dict):
