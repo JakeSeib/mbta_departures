@@ -6,7 +6,7 @@ export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
 # INSTALL DEPENDENCIES
-yum install -y zlib-devel epel-release python36 python36-devel mysql-devel httpd-devel
+yum install -y zlib-devel epel-release python38 python38-devel mysql-devel httpd-devel
 yum -y groupinstall development
 yum update -y
 
@@ -17,7 +17,7 @@ cp /var/www/basic_app/basic_app.conf /etc/httpd/conf.d/basic_app.conf
 wget "https://github.com/GrahamDumpleton/mod_wsgi/archive/4.5.14.tar.gz"
 tar -xzf '4.5.14.tar.gz'
 cd ./mod_wsgi-4.5.14
-./configure --with-python=/usr/bin/python3.6
+./configure --with-python=/usr/bin/python3.8
 make
 make install
 cd ..
