@@ -16,6 +16,6 @@ fi
 command source /var/www/basic_app/venv/bin/activate
 command pip install -r /var/www/basic_app/requirements.txt
 command pip list
-cd /var/www/basic_app/mbta_departures
+cd /var/www/basic_app/
 command python manage.py makemigrations
 command python manage.py migrate
