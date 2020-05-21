@@ -63,7 +63,7 @@ hooks:
     - location: scripts/install_dependencies
       timeout: 1000
       runas: root
-    - location: scripts/create_enviroment
+    - location: scripts/create_enviroment.sh
       timeout: 1000
       runas: ec2-user
   ApplicationStart:
