@@ -17,7 +17,13 @@ def index(request):
     curr_time = datetime.now().time()
     curr_hour, curr_minute = curr_time.hour, curr_time.minute
     if curr_hour < 10:
-        curr_hour = f'0{curr_hour}'
+        # mbta's v3 api states that between midnight and 3am is considered
+        # part of the previous calendar day, and a time of >24 hours should
+        # be used
+        if curr_hour < 3:
+            curr_hour += 24
+        else:
+            curr_hour = f'0{curr_hour}'
     if curr_minute < 10:
         curr_minute = f'0{curr_minute}'
 
