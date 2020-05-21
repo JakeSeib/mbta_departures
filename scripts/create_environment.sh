@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # OWN basic_app directory
-command sudo chown -R $USER:$USER /var/www/basic_app
+command sudo chown -R ec2-user:ec2-user /var/www/basic_app
 command python3 --version
 
 # CREATE PYTHON3 ENVIROMENT
@@ -17,5 +17,5 @@ command source /var/www/basic_app/venv/bin/activate
 command pip install -r /var/www/basic_app/requirements.txt
 command pip list
 cd /var/www/basic_app
-command python manage.py makemigrations
-command python manage.py migrate
+command python mbta_departures/manage.py makemigrations
+command python mbta_departures/manage.py migrate
