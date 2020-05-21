@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import os
 
 # Create your views here.
 import jsonapi_requests
@@ -31,7 +32,7 @@ def index(request):
         'API_ROOT': 'https://api-v3.mbta.com',
         'VALIDATE_SSL': False,
         'TIMEOUT': 1,
-        # 'api_key': 'TODO: insert an api_key here',
+        'api_key': os.environ.get('MY_APP_API_KEY'),
     })
 
     schedule_endpoint = api.endpoint('/schedules')
