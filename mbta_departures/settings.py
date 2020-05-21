@@ -26,6 +26,7 @@ config = configparser.RawConfigParser()
 
 config.read(BASE_DIR+'/.config.ini')
 SECRET_KEY = config['DEFAULT']['MY_APP_SECRET_KEY']
+API_KEY = config['DEFAULT']['MY_APP_API_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
