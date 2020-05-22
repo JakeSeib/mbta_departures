@@ -17,8 +17,6 @@ from .utils.sorting import sort_included
 def index(request):
     curr_time = datetime.now().time()
     curr_hour, curr_minute = curr_time.hour, curr_time.minute
-    print(curr_minute)
-    print(curr_minute < 10)
     if curr_hour < 10:
         # mbta's v3 api states that between midnight and 3am is considered
         # part of the previous calendar day, and a time of >24 hours should
@@ -29,7 +27,6 @@ def index(request):
             curr_hour = f'0{curr_hour}'
     if curr_minute < 10:
         curr_minute = f'0{curr_minute}'
-    print(curr_minute)
 
     api = jsonapi_requests.Api.config({
         'API_ROOT': 'https://api-v3.mbta.com',
