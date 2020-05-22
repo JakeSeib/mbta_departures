@@ -1,11 +1,11 @@
 ## About
-This is a simple Django app to display Commuter Rail departures from North Station in Boston.
+This is a simple Django app to display Commuter Rail departures from North Station in Boston. The app consists of a single web page, hosted [here](http://ec2-18-224-137-245.us-east-2.compute.amazonaws.com/) on an Amazon EC2 instance running an Apache web server.
 
 The MBTA's [V3 API](https://www.mbta.com/developers/v3-api) is used to get and display information for the next 10 upcoming departures from North Station. Typically these will conform to their scheduled times, but if they are predicted to depart late, their new departure times and statuses will be displayed.
 
 Only departures are displayed, as they would be on a departures board in the station itself. Unlike in the station itself though, Amtrak departures are not displayed, since they are not available from the MBTA's API.
 
-The page only pings the API once, on page load. To get up-to-date information, refresh the page.
+The page only pings the API once, on page load. To get up-to-date information, users must refresh the page.
 
 ## Dependencies
 - Python 3.8.2
@@ -19,16 +19,17 @@ The page only pings the API once, on page load. To get up-to-date information, r
   - `pip install python-dateutil`
 
 ## Setup
-After installing dependencies and downloading the app, navigate to the mbta_departures directory containing manage.py in the terminal and run:
+To run the app locally, start by installing dependencies as described above and downloading this repository.
+
+After installing the app, navigate to the outermost mbta_departures directory containing manage.py in the terminal and run:
 
 `python manage.py runserver`
 
-Depending on your python installation, you may need to run `python3 manage.py runserver` instead. Then, navigate to http://127.0.0.1:8000/departure_board/ in a browser to see the board of departures.
+Depending on your python installation, you may need to run `python3 manage.py runserver` instead. Then, navigate to http://127.0.0.1:8000/ in a browser to see the board of departures.
 
 ## Issues/Improvements
-- (In progress) App could be hosted and accessed directly via the web
-- (In progress) Django's secret_key should be private, not public
-- Though available information on commuter rail departures does not change often, the app could refresh automatically. As changes are infrequent, the simplest version of this could just re-ping the API every 60 seconds or so.
-  - While the V3 API does have 'streaming' functionality, this is only available for predictions, not schedules. The app would have to be refactored to make predictions the primary resource to make use of this- and in any case, predictions are not often available for departures from North Station, since it is the first stop and thus experiences the fewest delays.
-- The app currently has no styling and could look much better
-- To support more concurrent users or quicker page reloads, an API key could be added as an environment variable
+- (In progress) Though available information on commuter rail departures does not change often, the app could refresh automatically. As changes are infrequent, the simplest version of this could just re-ping the API every 60 seconds.
+  - While the V3 API does have 'streaming' functionality, this is only available for predictions, not schedules- chosen as the primary resource to take advantage of time filtering on the API. The app would have to be refactored to make predictions the primary resource to utilize streaming. For a larger-scale production app, this would be the desired method of updating and avoiding rate limiting issues.
+- The app currently has no styling and could look much better.
+  - Arguably, only the times of departures should be shown, not the full date. This should be looked at as part of any larger style pass.
+- 10 was chosen semi-arbitrarily as the cutoff for departures to show, to mimic a physical departure board. More information is available than this, though, and it could be displayed as well.
