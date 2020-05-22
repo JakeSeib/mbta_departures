@@ -1,0 +1,20 @@
+<table class='n-station-table'>
+  <tr>
+    <th>Carrier</th>
+    <th>Time</th>
+    <th>Destination</th>
+    <th>Train #</th>
+    <th>Track #</th>
+    <th>Status</th>
+  </tr>
+  {% for schedule in schedule_data %}
+  <tr>
+    <td>MBTA</td>
+    <td>{{ schedule.attributes.display_time }}</td>
+    <td>{{ schedule.attributes.headsign }}</td>
+    <td>{{ schedule.attributes.train_num }}</td>
+    <td>{{ schedule.attributes.track_num }}</td>
+    <td>{{ schedule.attributes.status }}</td>
+  </tr>
+  {% endfor %}
+</table>
