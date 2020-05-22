@@ -40,7 +40,7 @@ def index(request):
         'filter[stop]': 'place-north',
         'include': 'trip,prediction',
         'sort': 'departure_time',
-        'filter[min_time]': f'{curr_time.hour}:{curr_time.minute}',
+        'filter[min_time]': f'{curr_hour}:{curr_minute}',
         })
     included_dict = sort_included(schedule_response.content.included)
     schedule_data = get_display_schedules(schedule_response.data, included_dict)
