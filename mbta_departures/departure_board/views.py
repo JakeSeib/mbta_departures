@@ -46,6 +46,8 @@ def index(request):
     schedule_data = get_display_schedules(schedule_response.data, included_dict)
 
     context = {
+    # Could show more schedules than this if mimicking a real departure board
+    # isn't desired
     'schedule_data': schedule_data[0:10],
     'included_trips': included_dict['trips'],
     'included_predictions': included_dict['predictions'],
