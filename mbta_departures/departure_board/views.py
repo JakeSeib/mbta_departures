@@ -53,4 +53,4 @@ def index(request):
     'included_predictions': included_dict['predictions'],
     }
 
-    return render(request, 'departure_board/index.html', context)
+    return render(request, 'departure_board/table.html', context)
