@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
+from django.http import JsonResponse
+from django.template import loader
 
 # Create your views here.
 import jsonapi_requests
@@ -53,4 +55,10 @@ def index(request):
     'included_predictions': included_dict['predictions'],
     }
 
-    return render(request, 'departure_board/table.html', context)
+    # ajax requests, i.e. from static js files in the app, return a JSON object
+    # with the html for the table
+    if request.is_ajax():
+        table_template = loader.get_template('departure_board/table.html')
+        return JsonResponse({'table_html': table_template.render(context, request)})
+    else:
+        return render(request, 'departure_board/board.html', context)
