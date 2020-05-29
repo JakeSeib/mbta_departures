@@ -21,6 +21,16 @@ Only departures are displayed, as they would be on a departures board in the sta
 ## Setup
 To run the app locally, start by installing dependencies as described above and downloading this repository.
 
+In the base app directory, add a file named `.config.ini` and add the following lines, replacing the actual keys with your own content:
+
+```
+[DEFAULT]
+MY_APP_SECRET_KEY = [Your Key Goes Here]
+MY_APP_API_KEY = [Your Key Goes Here]
+```
+
+Obtaining a valid key for the MBTA's API is free, and can be done by visiting [their API's portal](https://api-v3.mbta.com/).
+
 To enable the static javascript and css files attached to the app to work locally, navigate to `mbta_departures/mbta_departures/settings.py` and change
 
 `DEBUG = False`
