@@ -53,6 +53,7 @@ def index(request):
     'schedule_data': schedule_data[0:10],
     'included_trips': included_dict['trips'],
     'included_predictions': included_dict['predictions'],
+    'django_debug': str(settings.DEBUG),
     }
 
     # ajax requests, i.e. from static js files in the app, return a JSON object
