@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>North Station CR Departure Board</title>
+  </head>
+  <body>
+    <main>
+      <div class='departure-container'>
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+    <script>
+      const djangoDebug = "{{ django_debug }}"
+    </script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>
